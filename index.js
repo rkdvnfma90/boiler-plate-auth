@@ -5,7 +5,7 @@ const port = 5000
 const mongoose = require('mongoose')
 mongoose
   .connect(
-    'mongodb+srv://kpl:dkdlxpa2@boilerplate.op97v.mongodb.net/boilerplate?retryWrites=true&w=majority',
+    'mongodb+srv://kpl:qwer1234@boilerplate.op97v.mongodb.net/boilerplate?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -13,8 +13,8 @@ mongoose
       useFindAndModify: false,
     }
   )
-  .then(() => console.log('MongoDB good'))
+  .then(() => console.log('MongoDB connected..'))
   .catch((err) => console.log(err))
 
 app.get('/', (req, res) => res.send('hello world'))
-app.listen(port, () => console.log(`port 는 ${port}`))
+app.listen(port, () => console.log(`port is ${port}`))
