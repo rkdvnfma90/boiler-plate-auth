@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 5000
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const { User } = require('./models/User')
 const config = require('./config/key')
 
@@ -10,6 +11,8 @@ const config = require('./config/key')
 app.use(bodyParser.urlencoded({ extended: true }))
 // application/json 타입으로 된 것을 분석해서 가져올 수 있게 함
 app.use(bodyParser.json())
+
+app.use(cookieParser())
 
 const mongoose = require('mongoose')
 mongoose
@@ -69,7 +72,16 @@ app.post('/login', (req, res) => {
       }
 
       // 비밀번호도 맞다면 해당 유저를 위한 토큰을 생성해야 한다.
-      user.generateToken((err, user) => {})
+      user.generateToken((err, user) => {
+        if (err) return res.status(400).send(err)
+
+        // 토큰을 저장한다. 어디에? 쿠키 or 로컬스토리지 or 세션
+        // 지금은 쿠키를 사용하겠다.
+        res.cookie('x_auth', user.token).status(200).json({
+          loginSuccess: true,
+          userId: user._id,
+        })
+      })
     })
   })
 })
