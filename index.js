@@ -3,6 +3,7 @@ const app = express()
 const port = 5000
 const bodyParser = require('body-parser')
 const { User } = require('./models/User')
+const config = require('./config/key')
 
 // 미들웨어 사용?
 // application/x-www-form-urlencoded 를 분석해서 가져올 수 있게 함
@@ -12,15 +13,12 @@ app.use(bodyParser.json())
 
 const mongoose = require('mongoose')
 mongoose
-  .connect(
-    'mongodb+srv://kpl:qwer1234@boilerplate.op97v.mongodb.net/boilerplate?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(config.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log('MongoDB connected..'))
   .catch((err) => console.log(err))
 
