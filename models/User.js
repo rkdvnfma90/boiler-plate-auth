@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 const jwt = require('jsonwebtoken')
+const config = require('../config/key')
 
 const userSchema = mongoose.Schema({
   name: {
@@ -58,6 +59,7 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.methods.comparePassword = function (plainPassword, callback) {
+  // 화살표 함수를 사용하면 this가 상위 렉시컬 스코프를 가리키기 때문에 user를 찾을 수 없다.
   const user = this
 
   bcrypt.compare(plainPassword, user.password, function (err, isMatch) {
@@ -69,7 +71,7 @@ userSchema.methods.comparePassword = function (plainPassword, callback) {
 userSchema.methods.generateToken = function (callback) {
   const user = this
   // jwt 사용하여 토큰 생성하기
-  const token = jwt.sign(user._id.toHexString(), 'secretToken')
+  const token = jwt.sign(user._id.toHexString(), config.tokenKey)
 
   user.token = token
   user.save((err, user) => {
