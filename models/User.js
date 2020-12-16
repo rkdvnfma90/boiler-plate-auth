@@ -79,7 +79,12 @@ userSchema.methods.generateToken = function (callback) {
     callback(null, user)
   })
 }
-
+/* https://github.com/bestdevhyo1225/dev-log/blob/master/MongoDB/Mongoose-statics-methods.md 참조
+  스키마.methods 에서의 this는 this가 호출한 대상을 가리킨다. 예를들어
+  user.generateToken 하면 this는 user를 가리키는 것.
+  statics는 this가 모델 그 자체를 가리킨다. 즉 mongoose 모델 (User) 를 가리키는 것 (조회할때 주로 사용)
+  그렇기 때문에 findByToken에서 mongoose 함수인 findOne을 호출 할 수 있는 것이다.
+*/
 userSchema.statics.findByToken = function (token, callback) {
   const user = this
 
