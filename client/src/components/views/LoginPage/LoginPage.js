@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { loginUser } from '../../../_actions/user_action'
 
 function LoginPage(props) {
+  // 액션을 발생시키는 디스패쳐
   const dispatch = useDispatch()
 
   const [Email, setEmail] = useState('')
@@ -24,6 +25,8 @@ function LoginPage(props) {
       password: Password,
     }
 
+    // useCallback 으로 감싸면 좋다.
+    // response 에는 리듀서에서 리턴한 값이 들어 있다.
     dispatch(loginUser(body)).then((response) => {
       if (response.payload.loginSuccess) {
         // 메인 페이지로 이동
