@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../../../_actions/user_action'
+import { withRouter } from 'react-router-dom'
 
 function LoginPage(props) {
   // 액션을 발생시키는 디스패쳐
@@ -64,4 +65,6 @@ function LoginPage(props) {
   )
 }
 
-export default LoginPage
+// withRouter : 라우터 컴포넌트가 아닌 곳에서 math, location, history를 사용하기 위함
+// 현재 페이지에서는 props.history를 사용하고 있음
+export default withRouter(LoginPage)
