@@ -24,8 +24,10 @@ function LoginPage(props) {
       email: Email,
       password: Password,
     }
-
     // useCallback 으로 감싸면 좋다.
+    // dispatch 하는 액션 객체의 payload가 promise이면 해당 promise를 리턴하는듯
+    // loginUser(body) 의 payload는 response.data가 담긴 Promise이다.
+    // 그러므로 then 으로 비동기 처리를 할 수 있는 것.
     // response 에는 리듀서에서 리턴한 값이 들어 있다.
     dispatch(loginUser(body)).then((response) => {
       if (response.payload.loginSuccess) {
